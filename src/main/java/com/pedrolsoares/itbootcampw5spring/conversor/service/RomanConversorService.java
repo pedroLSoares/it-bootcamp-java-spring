@@ -9,26 +9,18 @@ import java.util.TreeMap;
 @Service
 public class RomanConversorService {
 
-    public String convertRomanNumber(int number){
-        TreeMap<Integer, String> treemap = new TreeMap<Integer, String>();
-        treemap.put(1000, "M");
-        treemap.put(900, "CM");
-        treemap.put(500, "D");
-        treemap.put(400, "CD");
-        treemap.put(100, "C");
-        treemap.put(90, "XC");
-        treemap.put(50, "L");
-        treemap.put(40, "XL");
-        treemap.put(10, "X");
-        treemap.put(9, "IX");
-        treemap.put(5, "V");
-        treemap.put(4, "IV");
-        treemap.put(1, "I");
+    private static final int[] values = { 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1 };
+    private static final String[] romanLiterals = { "M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I" };
 
-        int l = treemap.floorKey(number);
-        if (number == l) {
-            return treemap.get(number);
+    public String convertRomanNumber(int number){
+        StringBuilder s = new StringBuilder();
+
+        for (int i = 0; i < values.length; i++) {
+            while (number >= values[i]) {
+                number -= values[i];
+                s.append(romanLiterals[i]);
+            }
         }
-        return treemap.get(l) + convertRomanNumber(number - l);
+        return s.toString();
     }
 }
