@@ -32,19 +32,24 @@ public class ConversorController {
 
     @GetMapping("/age/{day}/{month}/{year}")
     public ResponseEntity<?> calculateAge(@PathVariable Map<String, String> birth){
-        try{
+
             Long diff = calculatorService.calculateAgeByBirth(
                     Integer.parseInt(birth.get("day")),
                     Integer.parseInt(birth.get("month")),
                     Integer.parseInt(birth.get("year")));
             return new ResponseEntity<>(diff, HttpStatus.OK);
-        }catch(NumberFormatException e){
-            return new ResponseEntity<>("Ceritifque-se se os dados foram passados no formato correto dd/mm/yyyy", HttpStatus.BAD_REQUEST);
-        }catch (Exception e){
-            e.printStackTrace();
-            return new ResponseEntity<>("Ocorreu um erro durante a conversão, tente novamente mais tarde", HttpStatus.BAD_REQUEST);
-        }
 
+
+    }
+
+    @ExceptionHandler(NumberFormatException.class)
+    public ResponseEntity<?> handleNumberFormat(){
+        return new ResponseEntity<>("Ceritifque-se se os dados foram passados no formato correto", HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<?> handleException(){
+        return new ResponseEntity<>("Alguma coisa deu errado, tente novamente mais tarde.", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }
