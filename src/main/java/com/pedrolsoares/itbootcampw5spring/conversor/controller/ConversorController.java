@@ -41,6 +41,7 @@ public class ConversorController {
         }catch(NumberFormatException e){
             return new ResponseEntity<>("Ceritifque-se se os dados foram passados no formato correto dd/mm/yyyy", HttpStatus.BAD_REQUEST);
         }catch (Exception e){
+            e.printStackTrace();
             return new ResponseEntity<>("Ocorreu um erro durante a conversão, tente novamente mais tarde", HttpStatus.BAD_REQUEST);
         }
 
