@@ -11,7 +11,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,12 +26,18 @@ public class SportsController {
     private final AthleteService athleteService;
 
     @PostMapping
-    public ResponseEntity<?> createSport(Sport sport){
+    public ResponseEntity<?> createSport(@RequestBody Sport sport, UriComponentsBuilder uriComponentsBuilder){
         boolean created = sportService.createSport(sport);
         if (!created) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Não foi possível criar o usuário");
         }
-        return ResponseEntity.status(HttpStatus.CREATED).body("Criado");
+
+        URI uri = uriComponentsBuilder
+                .path("/api/v1/sports/findSports/{sportName}")
+                .buildAndExpand(sport.getName())
+                .toUri();
+
+        return ResponseEntity.created(uri).body(sport);
     }
 
     @GetMapping("/findSports")
