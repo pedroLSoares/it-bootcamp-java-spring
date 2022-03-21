@@ -6,9 +6,12 @@ import com.pedrolsoares.itbootcampw5spring.sports.model.Sport;
 import com.pedrolsoares.itbootcampw5spring.sports.repository.AthleteRepository;
 import com.pedrolsoares.itbootcampw5spring.sports.repository.PersonRepository;
 import com.pedrolsoares.itbootcampw5spring.sports.repository.SportsRepository;
+import com.pedrolsoares.itbootcampw5spring.starwars.repository.CharacterRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 @SpringBootApplication
@@ -39,6 +42,13 @@ public class ItBootcampW5SpringApplication {
         );
 
         athleteRepository.insertOne(new Athlete(p1, s1));
+
+        try {
+            new CharacterRepository().findAllByName("s");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
 }
