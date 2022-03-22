@@ -13,7 +13,7 @@ public class JsonUtils {
 
     private static final String DIRNAME = new File("src/main/java/com/pedrolsoares/itbootcampw5spring").getAbsolutePath();
 
-    public  static <T> List<T> readJsonArray(String filePath){
+    public  static <T> List<T> readJsonArray(String filePath, Class<T> cls){
         try{
             ObjectMapper objectMapper = new ObjectMapper();
             File file = new File(DIRNAME + filePath);
@@ -27,8 +27,5 @@ public class JsonUtils {
         }catch (Exception e){
             return new ArrayList<>();
         }
-
-
-
     }
 }

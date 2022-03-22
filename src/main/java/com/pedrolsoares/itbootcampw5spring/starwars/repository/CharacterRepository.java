@@ -28,12 +28,8 @@ public class CharacterRepository {
     }
 
     private List<Character> dtoConverter(File file, ObjectMapper objectMapper, String name) throws IOException {
-        Instant start2 = Instant.now();
-
         Character[] result = objectMapper.readValue(file, Character[].class);
 
-        Instant end2 = Instant.now();
-        System.out.println("Elapsed Time in nano seconds for dtoConverter2: " + Duration.between(start2, end2));
 
         return Arrays.stream(result).filter(c -> c.getName().toLowerCase(Locale.ROOT).equals(name.toLowerCase(Locale.ROOT))).collect(Collectors.toList());
     }
