@@ -28,10 +28,21 @@ public class Character implements Serializable {
     private String species;
 
     public void setHeight(Object height) {
-        this.height = (Integer) height;
+        try {
+            this.height = (Integer) height;
+
+        }catch (Exception e){
+            this.height = 0;
+        }
+
     }
 
     public void setMass(Object mass) {
-        this.mass = (Integer) mass;
+        try{
+            this.mass = (Integer) mass;
+        }catch (Exception e){
+            this.mass = 0;
+        }
+
     }
 }
